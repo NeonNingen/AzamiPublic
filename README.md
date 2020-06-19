@@ -24,7 +24,7 @@ Running
 
 Installation steps are:
 
-1) ##### When downloading make sure to check which type of Azami would you want. Look at the branches, you can either choose master (With webdriver) or non-webdriver
+1) ##### When downloading make sure to check which type of Azami you want. Look at the branches, you can either choose master (With webdriver) or non-webdriver
 
 2) ##### Make sure to get Python 3.6 or higher, to run the bot!
 
