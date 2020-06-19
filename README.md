@@ -24,33 +24,24 @@ Running
 
 Installation steps are:
 
-1) ##### Make sure to get Python 3.6 or higher, to run the bot!
+1) ##### When downloading make sure to check which type of Azami would you want. Look at the branches, you can either choose master (With webdriver) or non-webdriver
 
-2) ##### Set up a venv so do `python -m venv venv`
+2) ##### Make sure to get Python 3.6 or higher, to run the bot!
 
-3) ##### Install dependencies `pip install -U -r requirements.txt`
+3) ##### Set up a venv so do `python -m venv venv`
 
-4) ##### You can run this bot locally or with Heroku. Either follow step 5 to run locally or scroll down to Heroku to run 24/7.
+4) ##### Install dependencies `pip install -U -r requirements.txt`
 
-5) ##### Create a discord bot at the Discord Developer Portal and make a token.txt in the Azami directory and paste the token there!
+5) ##### You can run this bot locally or with Heroku. Either follow step 5 to run locally or scroll down to Heroku to run 24/7.
 
-6) ##### You can remove webdriver by deleting driver folder, then going to dnd.py in cogs and removing* Or you don't need to remove it
+6) ##### Create a discord bot at the Discord Developer Portal and make a token.txt in the Azami directory and paste the token there!
 
 7) ##### Note: Google chrome webdriver needs to be installed from [GC webdriver](https://chromedriver.chromium.org/downloads). Place the webdriver in your Azami directory. You can use other webdrivers if you know how to. E.g. Firefox webdriver. 
 
-7) ##### Go to the directory where you installed download Azami to and write cmd in the address bar
+8) ##### Go to the directory where you installed download Azami to and write cmd in the address bar
 
-8) ##### Finally write `python -m main` and press enter, and the bot will run
+9) ##### Finally write `python -m main` and press enter, and the bot will run
 
-Continuing from (6)*
-> from driver import get_driver - Line 12\
-try:\
-self.driver = get_driver()\
-except:\
-self.driver = webdriver.Chrome('./chromedriver')\
-self.driver.minimize_window() - Line 79 to 83\
-And delete all from line 279 to 563 basically all the error checks in this cog\
-and the commands -> spellsearch, classessearch, simpleclassessearch and dnd menu
 
 **Super important note: Make sure to go to events.py and change line 8 owner id to your user id. More detailed explanation in events.py. Allows for owner commands Also make sure you have pip to do step 3**
 
