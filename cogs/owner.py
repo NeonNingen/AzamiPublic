@@ -1,6 +1,5 @@
 import discord, sys
 from discord.ext import commands
-from discord.ext.commands import NotOwner, MissingRequiredArgument
 
 '''
 Note change "owner_id" integer on line 8 to your id by copying the id of your user
@@ -97,87 +96,7 @@ class Owner(commands.Cog, command_attrs=dict(hidden=True)):
 		cog = self.azami.get_cog('Owner')
 		commands = cog.get_commands()
 		await ctx.send([c.name for c in commands])
-
-	@load.error
-	async def load_error(self, ctx, error):
-		if isinstance(error, NotOwner):
-			await ctx.send("You must be the owner of this bot to use this command")
-		elif isinstance(error, commands.CommandInvokeError):
-			await ctx.send(f"That cog doesn't exist")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires an argument")
-
-	@unload.error
-	async def unload_error(self, ctx, error):
-		if isinstance(error, NotOwner):
-			await ctx.send("You must be the owner of this bot to use this command")
-		elif isinstance(error, commands.CommandInvokeError):
-			await ctx.send("Invalid arguement, did you check if it's lower case or missing an arguement?")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires an argument")
-
-	@_reload.error
-	async def reload_error(self, ctx, error):
-		if isinstance(error, NotOwner):
-			await ctx.send("You must be the owner of this bot to use this command")
-		elif isinstance(error, commands.CommandInvokeError):
-			await ctx.send("Invalid arguement, did you check if it's lower case or missing an arguement?")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires an argument")
-
-	@hackban.error
-	async def hackban_error(self, ctx, error):
-		if isinstance(error, NotOwner):
-			await ctx.send("You must be the owner of this bot to use this command")
-		elif isinstance(error, commands.MissingPermissions):
-			await ctx.send("You cannot use this command")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Enter as follows: `ab!hackban {user_id}`")
-
-	@botinvite.error
-	async def botinvite_error(self, ctx, error):
-		if isinstance(error, NotOwner):
-			await ctx.send("You must be the owner of this bot to use this command")
-		elif isinstance(error, commands.CommandInvokeError):
-			await ctx.send("Invalid arguement, did you check if it's lower case or missing an arguement?")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires an argument")
-
-	@owner.error
-	async def owner_error(self, ctx, error):
-		if isinstance(error, NotOwner):
-			await ctx.send("You must be the owner of this bot to use this command")
-		elif isinstance(error, commands.CommandInvokeError):
-			await ctx.send("Invalid arguement, did you check if it's lower case or missing an arguement?")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires an argument")
-
-	@guildleave.error
-	async def guildleave_error(self, ctx, error):
-		if isinstance(error, NotOwner):
-			await ctx.send("You must be the owner of this bot to use this command")
-		elif isinstance(error, commands.CommandInvokeError):
-			await ctx.send("Invalid arguement, did you check if it's lower case or missing an arguement?")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires an argument")
-
-	@guildlist.error
-	async def guildlist_error(self, ctx, error):
-		if isinstance(error, NotOwner):
-			await ctx.send("You must be the owner of this bot to use this command")
-		elif isinstance(error, commands.CommandInvokeError):
-			await ctx.send("Invalid arguement, did you check if it's lower case or missing an arguement?")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires an argument")
-
-	@shutdown.error
-	async def shutdown_error(self, ctx, error):
-		if isinstance(error, NotOwner):
-			await ctx.send("You must be the owner of this bot to use this command")
-		elif isinstance(error, commands.CommandInvokeError):
-			await ctx.send("Invalid arguement, did you check if it's lower case or missing an arguement?")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires an argument")
+		
 		
 def setup(azami):
 	azami.add_cog(Owner(azami))
