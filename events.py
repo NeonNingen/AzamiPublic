@@ -18,7 +18,8 @@ def event_azami():
 	        'maths',
 	        'mod',
 	        'owner',
-	        'server']
+	        'server',
+	        'errorHandler']
 	
 	for cog in cogs:
 		azami.load_extension(f'cogs.{cog}')
