@@ -19,7 +19,7 @@ def event_azami():
 	        'mod',
 	        'owner',
 	        'server',
-	        'errorHandler']
+	        'CommandErrorHandler']
 	
 	for cog in cogs:
 		azami.load_extension(f'cogs.{cog}')
