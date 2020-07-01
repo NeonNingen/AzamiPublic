@@ -183,34 +183,7 @@ class Fun(commands.Cog):
 			
 			await asyncio.sleep(4)
 			await msg.edit(embed=embed)
-
-
-
-	@blame.error
-	async def blame_error(self, ctx, error):
-		if isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires a user to blame")
-
-	@slap.error 
-	async def slap_error(self, ctx, error):
-		if isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires a user to hit")
-
-	@_8ball.error
-	async def ball8_error(self, ctx, error):
-		if isinstance(error, MissingRequiredArgument):
-			await ctx.send("Please write a question for me to respond to")
-
-	@up.error
-	async def up_error(self, ctx, error):
-		if isinstance(error, MissingRequiredArgument):
-			await ctx.send("Please give me a word or sentence")
-
-	@say.error
-	async def say_error(self, ctx, error):
-		if isinstance(error, MissingRequiredArgument):
-			await ctx.send("Please give me a word or sentence")
-	
+			
 
 def setup(azami):
 	azami.add_cog(Fun(azami))
