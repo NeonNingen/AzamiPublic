@@ -1,6 +1,5 @@
 import discord, sys, time, aiohttp, json
 from discord.ext import commands
-from discord.ext.commands import MissingRequiredArgument
 from random import randint
 from asyncio import sleep
 from selenium import webdriver
@@ -538,29 +537,6 @@ class Dnd(commands.Cog): # Work on Embed Rolls also modifier addon
 				await ctx.send(embed=spell_em)
 				break
 
-	
-	@spellsearch.error
-	async def spellsearch_error(self, ctx, error):
-		if isinstance(error, commands.CommandInvokeError):
-			await ctx.send(f"Incorrect Spell given")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires an argument")
-
-	@classessearch.error
-	async def classessearch_error(self, ctx, error):
-		if isinstance(error, commands.CommandInvokeError):
-			await ctx.send(f"Incorrect Class given")
-			print(error)
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires an argument")
-
-	@simpleclassessearch.error
-	async def simpleclassessearch_error(self, ctx, error):
-		if isinstance(error, commands.CommandInvokeError):
-			await ctx.send(f"Incorrect Class given")
-			print(error)
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires an argument")
 
 
 def setup(azami):
