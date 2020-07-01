@@ -113,7 +113,7 @@ class Fun(commands.Cog):
 		hello_em.set_image(url="https://media1.giphy.com/media/xUOwFX9O1080yxFDk4/source.gif")
 		hello_em.set_thumbnail(url=ctx.message.author.avatar_url)
 		hello_em.set_footer(text="Your opponent is me!",
-							   icon_url=bot.user.avatar_url)
+							   icon_url=azami.user.avatar_url)
 		msg = await ctx.send(embed=hello_em)
 
 
@@ -126,7 +126,7 @@ class Fun(commands.Cog):
 			await ctx.send(f'Wins: {wins}, Losses: {losses}, Ties: {ties}', delete_after=5)
 			choiceMessage = await ctx.send("What do you choose (r)ock, (p)aper, (s)cissors or (q)uit")
 			try:
-				inputChoice = await bot.wait_for('message', check=check, timeout=20)
+				inputChoice = await azami.wait_for('message', check=check, timeout=20)
 			except:
 				await ctx.send('You took too long to respond.')
 				return
@@ -150,7 +150,7 @@ class Fun(commands.Cog):
 			compEmbed = discord.Embed(title=f'{compChoice["name"]}!', 
 									  color=compChoice["colour"])
 			compEmbed.set_image(url=compChoice["compImage"])
-			compEmbed.set_thumbnail(url=bot.user.avatar_url)
+			compEmbed.set_thumbnail(url=azami.user.avatar_url)
 
 			await asyncio.sleep(3)
 			await msg.edit(embed=compEmbed)
@@ -181,7 +181,7 @@ class Fun(commands.Cog):
 									 description="Ha! You lost!",
 									 color=discord.Color.dark_red())
 				embed.set_image(url="https://media.giphy.com/media/5MtOIdkHhxPFu/giphy.gif")
-				embed.set_thumbnail(url=bot.user.avatar_url)
+				embed.set_thumbnail(url=azami.user.avatar_url)
 				losses += 1
 			
 			await asyncio.sleep(4)
