@@ -9,10 +9,19 @@ azami = commands.Bot(command_prefix = 'a!',
 
 def event_azami():
 
-	for filename in os.listdir('./cogs'): # Looping for all the cogs on startup
-		if filename.endswith('.py'):
-			azami.load_extension(f'cogs.{filename[:-3]}')
-			print(f"The following cog has loaded: {filename[:-3]}")
+	cogs = ['basic',
+		'dnd',
+		'fun', 
+		'help',
+		'jojo',
+	        'maths',
+	        'mod',
+	        'owner',
+	        'server']
+	
+	for cog in cogs:
+		azami.load_extension(f'cogs.{cog}')
+		print(f'The following cog has been loaded: {cog}')
 
 	@azami.event
 	async def on_ready(): # Message when logged in on console
