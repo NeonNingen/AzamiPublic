@@ -33,23 +33,19 @@ class CommandErrorHandler(commands.Cog):
 				pass
 
 		elif isinstance(error, commands.BadArgument) or isinstance(error, commands.CommandInvokeError):
-            await ctx.send('Invalid input')
+		    await ctx.send('Invalid input')
 
-        elif isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send("Requires an argument.")
+		elif isinstance(error, commands.MissingRequiredArgument):
+		    await ctx.send("Requires an argument.")
 
-        elif isinstance(error, commands.NotOwner):
+		elif isinstance(error, commands.NotOwner):
 			await ctx.send("You must be the owner of this bot to use this command")
-        
 
-
-
-
-        #Include this block of code if you want to send errors to console
+		#Include this block of code if you want to send errors to console
 		# print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
 		# traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
-        #Include this block of code if you want to send errors to a channel, change id in  channel = bot.get_channel(id) to the id of the channel you want to send it to
+		#Include this block of code if you want to send errors to a channel, change id in  channel = bot.get_channel(id) to the id of the channel you want to send it to
 		# channel = bot.get_channel(id)
 		# embed=discord.Embed(color=0xFF0000)
 		# embed.add_field(name="Error", value="```python\n"+str(error)+"```\n", inline=True)
@@ -59,7 +55,7 @@ class CommandErrorHandler(commands.Cog):
 		# await channel.send(embed=embed)
 		#await ctx.send(embed=ctx.bot.something_error)
 
-        return
+		return
 
 def setup(bot):
 	bot.add_cog(CommandErrorHandler(bot))
