@@ -9,6 +9,7 @@ azami = commands.Bot(command_prefix = 'a!',
 
 def event_azami():
 
+	#Change this list if you add/remove cogs
 	cogs = ['basic',
 		'dnd',
 		'fun', 
@@ -57,19 +58,18 @@ def event_azami():
 		for cog in cogs:
 			cogc = azami.get_cog(cog).get_commands()
 			store += len(cogc)
-		for channel in guild.text_channels: # cogc = cog commands
-			if channel.permissions_for(guild.me).send_messages:
-				embed = discord.Embed(title="Hi there!",
-									  description=f"{guild.name}, I'm so excited to be here!",
-									  color=discord.Color.gold())
-				embed.set_thumbnail(url=guild.icon_url)
-				embed.set_footer(text=f"I'm in {len(azami.guilds)} guilds!")
-				value1 = f"I'm an all purpose bot with currently:\n **{len(cogs)} cogs** and **{store} commands**"
-				value2 = f"It's a pleasure to make your Acquaintance, {guild.owner.mention}"
-				embed.add_field(name=f"Hi, my name is {azami.user.name}", value=value1)
-				embed.add_field(name=f"To read about my commands, do {azami.command_prefix}help", value=value2)
-				await channel.send(embed=embed)
-			break
+		channel = guild.system_channel
+		if channel.permissions_for(guild.me).send_messages:
+			embed = discord.Embed(title="Hi there!",
+								  description=f"{guild.name}, I'm so excited to be here!",
+								  color=discord.Color.gold())
+			embed.set_thumbnail(url=guild.icon_url)
+			embed.set_footer(text=f"I'm in {len(azami.guilds)} guilds!")
+			value1 = f"I'm an all purpose bot with currently:\n **{len(cogs)} cogs** and **{store} commands**"
+			value2 = f"It's a pleasure to make your Acquaintance, {guild.owner.mention}"
+			embed.add_field(name=f"Hi, my name is {azami.user.name}", value=value1)
+			embed.add_field(name=f"To read about my commands, do {azami.command_prefix}help", value=value2)
+			await channel.send(embed=embed)
 
 def main(): # Actual main function xD
 	event_azami()
