@@ -157,9 +157,6 @@ class Fun(commands.Cog):
 
 			await ctx.send("Please wait...", delete_after=4)
 
-			print(inputChoice)
-			print(randrps)
-
 			if inputChoice == randrps:
 				embed = discord.Embed(title="It's a tie...",
 									 description="Prepare to lose next time!",
