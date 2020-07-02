@@ -93,6 +93,15 @@ class Fun(commands.Cog):
 	@commands.command(description="Let's play a game of Jan Ken Pon!",
 					  aliases=['rockpaperscissors', 'rock'])
 	async def rps(self, ctx):
+		if ctx.author.id in rpsUsers:
+			await ctx.send('Starting a new game', delete_after=5)
+			rpsUser = rpsUsers[ctx.author.id]
+			channel = await azami.get_channel(rpsUser["channel"])
+			msg1 = await channel.fetch_message(rpsUser["message1"])
+			await msg1.delete()
+			msg2 = await channel.fetch_message(rpsUser["message2"])
+			await msg2.delete()
+		
 		choices = {'r' : 
 						{"name" : "Rock",
 						"compImage" : "https://technabob.com/blog/wp-content/uploads/2018/07/ksts_st_rock_mood_light_colors.gif", 
@@ -134,6 +143,7 @@ class Fun(commands.Cog):
 		while True:
 			await ctx.send(f'Wins: {wins}, Losses: {losses}, Ties: {ties}', delete_after=5)
 			choiceMessage = await ctx.send("What do you choose (r)ock, (p)aper, (s)cissors or (q)uit")
+			rpsUsers[ctx.author.id] = {"channel" : ctx.channel.id, "message1" : msg.id, "message2" : choiceMessage.id}
 			try:
 				inputChoice = await azami.wait_for('message', check=check, timeout=20)
 			except:
@@ -196,3 +206,6 @@ class Fun(commands.Cog):
 
 def setup(azami):
 	azami.add_cog(Fun(azami))
+	
+	global rpsUsers
+	rpsUsers = {}
