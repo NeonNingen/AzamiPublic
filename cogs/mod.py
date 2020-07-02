@@ -64,8 +64,10 @@ class Mod(commands.Cog):
 	@commands.command(description='Watch me purge away!',
 					  usage='This command only works for moderators')
 	@commands.has_permissions(manage_messages=True)
-	async def clear(self, ctx, amount: int = 5):
-		await ctx.channel.purge(limit = amount + 1)
+	async def clear(self, ctx, amount: int = 1):
+		await ctx.channel.purge(limit=amount+1, check=lambda msg: not msg.pinned)
+		clearedmessages = discord.Embed(color=0x00FFFB, title=f"Successfully purged {amount} messages.")
+		await ctx.send(embed=clearedmessages, delete_after=5)
 
 	@commands.command(description='Give a role!', aliases=["ar", "giverole", "gr"],
 					  usage='This command only works for moderators')
