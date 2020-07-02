@@ -96,12 +96,17 @@ class Fun(commands.Cog):
 		if ctx.author.id in rpsUsers:
 			await ctx.send('Starting a new game', delete_after=5)
 			rpsUser = rpsUsers[ctx.author.id]
-			channel = await azami.get_channel(rpsUser["channel"])
-			msg1 = await channel.fetch_message(rpsUser["message1"])
-			await msg1.delete()
-			msg2 = await channel.fetch_message(rpsUser["message2"])
-			await msg2.delete()
+			try:
+				channel = azami.get_channel(rpsUser["channel"])
+				msg1 = await channel.fetch_message(rpsUser["message1"])
+				await msg1.delete()
+				msg2 = await channel.fetch_message(rpsUser["message2"])
+				await msg2.delete()
+			except:
+				#bit of a lazy way but does that really matter 
+				pass
 		
+		#just want to put it out there that a dict is faster than a hashtable and that a hashtable is just a way to use a dict so go sugma
 		choices = {'r' : 
 						{"name" : "Rock",
 						"compImage" : "https://technabob.com/blog/wp-content/uploads/2018/07/ksts_st_rock_mood_light_colors.gif", 
@@ -137,20 +142,21 @@ class Fun(commands.Cog):
 
 		inputChoice, wins, losses, ties = '', 0, 0, 0
 
-		def check(c):
-			return c.author == ctx.author and c.content.lower() in ['r', 'p', 's', 'q']
-
+		def check(r, c):
+			return c.author == ctx.author and c.content.lower() in ['r', 'p', 's', 'q'] and msg.id == rpsUsers[ctx.author.id]['message1']
+		
+		#because of bad while loop, it's sort of hard to 'cancel' the wait_for, even if you delete the message or use reactions instead it will still respond once so no point - so I made the timeout not send a message
 		while True:
 			await ctx.send(f'Wins: {wins}, Losses: {losses}, Ties: {ties}', delete_after=5)
 			choiceMessage = await ctx.send("What do you choose (r)ock, (p)aper, (s)cissors or (q)uit")
-			rpsUsers[ctx.author.id] = {"channel" : ctx.channel.id, "message1" : msg.id, "message2" : choiceMessage.id}
 			try:
 				inputChoice = await azami.wait_for('message', check=check, timeout=20)
 			except:
-				await ctx.send('You took too long to respond.')
 				return
+			rpsUsers[ctx.author.id] = {"channel" : ctx.channel.id, "message1" : msg.id, "message2" : choiceMessage.id}
 			inputChoice = inputChoice.content
 			choiceMessage.delete()
+			inputMessage.delete()
 
 			if inputChoice == 'q':
 				await ctx.send("See you next time")
