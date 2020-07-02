@@ -15,14 +15,9 @@ class Fun(commands.Cog):
 	def __init__(self, azami):
 		self.azami = azami
 
-	class Slapper(commands.Converter):
-		async def convert(self, ctx, argument):
-			to_slap = choice(ctx.guild.members)
-			return f'{ctx.author} slapped {to_slap} because *{argument}*'
-
 	@commands.command(description="It's your fault!")
-	async def blame(self, ctx, *, reason: Slapper):
-		await ctx.send(reason)
+	async def blame(self, ctx, *, reason):
+		await ctx.send(f'{ctx.author} slapped {choice(ctx.guild.members)} because *{reason}*')
 
 	@commands.command(description='This is gonna hurt!')
 	async def slap(self, ctx, user):
@@ -37,6 +32,7 @@ class Fun(commands.Cog):
 					  description='What answers do you seek?',
 					  usage='Have your questions answered!')
 	async def _8ball(self, ctx, *, question):
+		#Who makes a txt for this stuff? just make it a list/put it in db, txt files are cringe
 		with open('cogs/responses_fun.txt', 'r') as f:
 			responses = f.read().splitlines()
 			# When rehauling use folders for each cog
@@ -50,9 +46,6 @@ class Fun(commands.Cog):
 	@commands.command(description='Bang and the dirt is gone',
 					  usage='You can suicide, shoot others or shoot Azami!')
 	async def shoot(self, ctx, *members: discord.Member):
-		if not members: # Built in error check
-			await ctx.send("You gotta give me someone to shoot!")
-			return
 		for member in members:
 			if member == self.azami.user:
 				embed = discord.Embed(
