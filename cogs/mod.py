@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from discord.ext.commands import MissingRequiredArgument
 
 class Mod(commands.Cog):
 
@@ -65,8 +64,10 @@ class Mod(commands.Cog):
 	@commands.command(description='Watch me purge away!',
 					  usage='This command only works for moderators')
 	@commands.has_permissions(manage_messages=True)
-	async def clear(self, ctx, amount: int = 5):
-		await ctx.channel.purge(limit = amount + 1)
+	async def clear(self, ctx, amount: int = 1):
+		await ctx.channel.purge(limit=amount+1, check=lambda msg: not msg.pinned)
+		clearedmessages = discord.Embed(color=0x00FFFB, title=f"Successfully purged {amount} messages.")
+		await ctx.send(embed=clearedmessages, delete_after=5)
 
 	@commands.command(description='Give a role!', aliases=["ar", "giverole", "gr"],
 					  usage='This command only works for moderators')
@@ -96,72 +97,5 @@ class Mod(commands.Cog):
 		else:
 			await ctx.send("error")
 
-			
-
-	@kick.error
-	async def kick_error(self, ctx, error):
-		if isinstance(error, commands.MissingPermissions):
-			await ctx.send("You cannot use this command")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires a user to kick")		
-
-	@ban.error
-	async def ban_error(self, ctx, error):
-		if isinstance(error, commands.MissingPermissions):
-			await ctx.send("You cannot use this command")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires a user to ban")
-
-	@unban.error
-	async def unban_error(self, ctx, error):
-		if isinstance(error, commands.MissingPermissions):
-			await ctx.send("You cannot use this command")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Requires a banned user in your server")
-
-	@mute.error
-	async def mute_error(self, ctx, error):
-		if isinstance(error, commands.MissingPermissions):
-			await ctx.send("You cannot use this command")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Please give me a user from this server to mute. You can include a reason")
-		elif isinstance(error, commands.BadArgument):
-			await ctx.send("Invalid Argument, please mention a user with {@user} ")
-
-	@unmute.error
-	async def unmute_error(self, ctx, error):
-		if isinstance(error, commands.MissingPermissions):
-			await ctx.send("You cannot use this command")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Please give me a muted user from this server")
-		elif isinstance(error, commands.BadArgument):
-			await ctx.send("Invalid Argument, Give me a muted user from this server ")
-
-	@clear.error
-	async def clear_error(self, ctx, error):
-		if isinstance(error, commands.MissingPermissions):
-			await ctx.send("You cannot use this command")
-
-	@addrole.error
-	async def addrole_error(self, ctx, error):
-		if isinstance(error, commands.MissingPermissions):
-			await ctx.send("You cannot use this command")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Please input the user and role: `a!addrole {@user} {@role}`")
-
-	@removerole.error
-	async def removerole_error(self, ctx, error):
-		if isinstance(error, commands.MissingPermissions):
-			await ctx.send("You cannot use this command")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Please input the user and role: `a!removerole {@user} {@role}`")
-
-	@selfrole.error
-	async def selfrole_error(self, ctx, error):
-		if isinstance(error, commands.MissingPermissions):
-			await ctx.send("You cannot use this command")
-		elif isinstance(error, MissingRequiredArgument):
-			await ctx.send("Please input your choice and role: `a!selfrole {add/remove} {@role}`")
-	
 def setup(azami):
 	azami.add_cog(Mod(azami))

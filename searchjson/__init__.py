@@ -13,6 +13,7 @@ async def hastebin(content, session=None): # Move to cogs/utils/check in future
 		else:
 			return f"Error with creating Hastebin, Status: {resp.status}"
 
+		
 def startEquipment(driver, body):
 	y = json.loads(body)
 	startEquipmentUrl = y['starting_equipment']['url']
@@ -22,40 +23,39 @@ def startEquipment(driver, body):
 	y2 = json.loads(body2)
 
 	valueStartEquipmentDef = [y2['starting_equipment'][x]['item']['name'] + " " + str(y2['starting_equipment'][0]['quantity']) for x in range(len(y2['starting_equipment']))] 
-	valueStartEquipmentDef = '\n'.join(p for p in valueStartEquipmentDef)
+	valueStartEquipmentDef = '\n'.join(valueStartEquipmentDef)
 	valueStartEquipmentChoose = y2['choices_to_make']
 
 	try:
 		valueStartEquipmentChoiceA1 = ["a) " + y2['choice_1'][0]['from'][x]['item']['name'] + " or " + y2['choice_1'][1]['from'][x]['item']['name'] for x in range(len(y2['choice_1'][0]['from']))]
 		valueStartEquipmentChoiceA2 = [y2['choice_1'][2]['from'][x]['item']['name'] for x in range(len(y2['choice_1'][2]['from']))]
-		valueStartEquipmentChoiceA1 = ', '.join(p for p in valueStartEquipmentChoiceA1)
-		valueStartEquipmentChoiceA2 = ', '.join(p for p in valueStartEquipmentChoiceA2)
-		valueStartEquipmentChoiceA = valueStartEquipmentChoiceA1+" or "+valueStartEquipmentChoiceA2
 	except:
 		valueStartEquipmentChoiceA1 = ["a) " + y2['choice_1'][0]['from'][x]['item']['name'] for x in range(len(y2['choice_1'][0]['from']))]
 		valueStartEquipmentChoiceA2 = [y2['choice_1'][1]['from'][x]['item']['name'] for x in range(len(y2['choice_1'][1]['from']))]
-		valueStartEquipmentChoiceA1 = ', '.join(p for p in valueStartEquipmentChoiceA1)
-		valueStartEquipmentChoiceA2 = ', '.join(p for p in valueStartEquipmentChoiceA2)
-		valueStartEquipmentChoiceA = valueStartEquipmentChoiceA1+" or "+valueStartEquipmentChoiceA2
+		
+	valueStartEquipmentChoiceA1 = ', '.join(valueStartEquipmentChoiceA1)
+	valueStartEquipmentChoiceA2 = ', '.join(valueStartEquipmentChoiceA2)
+	valueStartEquipmentChoiceA = valueStartEquipmentChoiceA1+" or "+valueStartEquipmentChoiceA2
 
 	try:
 		valueStartEquipmentChoiceB = ["b) " + y2['choice_2'][0]['from'][x]['item']['name'] + " or " + y2['choice_2'][1]['from'][x]['item']['name'] for x in range(len(y2['choice_2'][0]['from']))]
-		valueStartEquipmentChoiceB = ', '.join(p for p in valueStartEquipmentChoiceB)
 	except:
 		valueStartEquipmentChoiceB = ["b) " + y2['choice_2'][0]['from'][x]['item']['name'] for x in range(len(y2['choice_2'][0]['from']))]
-		valueStartEquipmentChoiceB = ', '.join(p for p in valueStartEquipmentChoiceB)
+		
+	valueStartEquipmentChoiceB = ', '.join(valueStartEquipmentChoiceB)
 
 	try:
 		valueStartEquipmentChoiceC1 = ["c) " + y2['choice_3'][0]['from'][x]['item']['name'] for x in range(len(y2['choice_3'][0]['from']))]
 		valueStartEquipmentChoiceC2 = [y2['choice_3'][1]['from'][x]['item']['name'] for x in range(len(y2['choice_3'][1]['from']))]
-		valueStartEquipmentChoiceC1 = ', '.join(p for p in valueStartEquipmentChoiceC1)
-		valueStartEquipmentChoiceC2 = ', '.join(p for p in valueStartEquipmentChoiceC2)#
+		valueStartEquipmentChoiceC1 = ', '.join(valueStartEquipmentChoiceC1)
+		valueStartEquipmentChoiceC2 = ', '.join(valueStartEquipmentChoiceC2)#
 		valueStartEquipmentChoiceC = valueStartEquipmentChoiceC1+" or "+valueStartEquipmentChoiceC2
 	except:
 		valueStartEquipmentChoiceC = "N/A"
 
 	driver.find_element_by_tag_name('body').send_keys(Keys.COMMAND + 'w') 
 	return valueStartEquipmentDef, valueStartEquipmentChoose ,valueStartEquipmentChoiceA, valueStartEquipmentChoiceB, valueStartEquipmentChoiceC
+
 
 def levelling(driver, body):
 	y = json.loads(body)
@@ -85,9 +85,9 @@ def levelling(driver, body):
 			level_list3.append(valueLevel4)
 		level_list.append(valueLevel1)
 
-	level_list = '\n'.join(p for p in level_list)
-	level_list2 = '\n'.join(p for p in level_list2)
-	level_list3 = '\n'.join(p for p in level_list3)
+	level_list = '\n'.join(level_list)
+	level_list2 = '\n'.join(level_list2)
+	level_list3 = '\n'.join(level_list3)
 	return level_list, level_list2, level_list3
 
 
@@ -107,13 +107,13 @@ def spellfind(driver, content, ctx, azami):
 								 color=discord.Color.red())
 		spell_em.set_thumbnail(url=azami.user.avatar_url)
 		return spell_em
-	valueDesc = '\n\n'.join(p for p in valueDesc)
+	valueDesc = '\n\n'.join(valueDesc)
 	valueHighLvl = y['higher_level']
-	valueHighLvl = '\n\n'.join(p for p in valueHighLvl)
+	valueHighLvl = '\n\n'.join(valueHighLvl)
 	valueComp = y['components']
-	valueComp = ', '.join(p for p in valueComp)
+	valueComp = ', '.join(valueComp)
 	valueClasses = [y['classes'][x]['name'] for x in range(len(y['classes']))]
-	valueClasses = ', '.join(p for p in valueClasses)
+	valueClasses = ', '.join(valueClasses)
 
 	spell_em = discord.Embed(title="So here's the spell your looking for traveller!",
 							 description=f"Information on: {y['name']}",
@@ -132,6 +132,7 @@ def spellfind(driver, content, ctx, azami):
 	spell_em.add_field(name="Classes", value=valueClasses)
 	return spell_em
 
+				  
 async def simpleclassfind(driver, content, ctx, azami):
 	content = content.lower().replace(' ', '-')
 	wait = WebDriverWait(driver, 5)
@@ -218,7 +219,7 @@ def classfind(driver, content, ctx, azami):
 
 	try:
 		valueProfSpells = [y['proficiency_choices'][0]['from'][x]['name'] for x in range(len(y['proficiency_choices'][0]['from']))]
-		valueProfSpells = '\n'.join(p for p in valueProfSpells)
+		valueProfSpells = '\n'.join(valueProfSpells)
 	except:
 		class_em = discord.Embed(title="Incorrect Class Given",
 								 description="Error Occurred!",
@@ -227,13 +228,13 @@ def classfind(driver, content, ctx, azami):
 		return class_em
 	try:
 		valueProfItems = [y['proficiency_choices'][1]['from'][x]['name'] for x in range(len(y['proficiency_choices'][1]['from']))]
-		valueProfItems = '\n'.join(p for p in valueProfItems)
+		valueProfItems = '\n'.join(valueProfItems)
 	except:
 		valueProfItems = 'N/A'
 	valueProfGeneral = [y['proficiencies'][x]['name'] for x in range(len(y['proficiencies']))]
-	valueProfGeneral = '\n'.join(p for p in valueProfGeneral)
+	valueProfGeneral = '\n'.join(valueProfGeneral)
 	savingThrow = [y['saving_throws'][x]['name'] for x in range(len(y['saving_throws']))]
-	savingThrow = ', '.join(p for p in savingThrow)
+	savingThrow = ', '.join(savingThrow)
 	valueStartEquipmentDef, valueStartEquipmentChoose, valueStartEquipmentChoiceA, valueStartEquipmentChoiceB, valueStartEquipmentChoiceC = startEquipment(driver, body)
 	valueLevel1, valueLevel2, valueLevel3 = levelling(driver, body)
 

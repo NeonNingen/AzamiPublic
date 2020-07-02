@@ -27,6 +27,7 @@ class Help(commands.Cog):
 
 		cogs = [c for c in self.azami.cogs.keys()]
 		cogs.remove('Owner')
+		cogs.remove('CommandErrorHandler')
 
 		if cog == 'all':
 			for cog in cogs:
