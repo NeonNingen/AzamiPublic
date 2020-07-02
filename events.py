@@ -19,7 +19,8 @@ def event_azami():
 	        'mod',
 	        'owner',
 	        'server',
-	        'CommandErrorHandler']
+	        'CommandErrorHandler'
+	       ]
 	
 	for cog in cogs:
 		azami.load_extension(f'cogs.{cog}')
@@ -29,9 +30,11 @@ def event_azami():
 	async def on_ready(): # Message when logged in on console
 		await azami.change_presence(activity=discord.Activity(
 			name=(
-				f"a!help for help | {len(azami.guilds)} servers | V1.0"), type=discord.ActivityType.playing))
+				f"a!help for help | {len(azami.guilds)} servers | Epic Version"), type=discord.ActivityType.playing))
 		print(f"We have logged in as {azami.user}")	
 
+		
+	#If using a db perhaps consider storing welcome/goodbye channels then sending an embed to them on these next two events
 	@azami.event
 	async def on_member_join(member):
 		print(f"{member} has joined {member.guild}")
@@ -39,18 +42,6 @@ def event_azami():
 	@azami.event
 	async def on_member_remove(member):
 		print(f"{member} has left/kick from {member.guild}")	
-
-	'''
-	Error when a command is not found
-	Note when working on cogs. Comment this out
-	Due to it disabling errors in console
-	'''
-	@azami.event
-	async def on_command_error(ctx, error): 
-		if isinstance(error, CommandNotFound): 
-			await ctx.send("Invalid command, did you type that right?") 
-			return
-		return error
 
 	@azami.event
 	async def on_guild_join(guild: discord.Guild): # Join message on guild
