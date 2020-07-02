@@ -56,10 +56,7 @@ def return_results(limit, rolls, mod, i=0): # Future update: Embed all commands
 def hiddenrolls(mod=0):
 	dice = '1d20'
 	rolls, limit = map(int, dice.split('d'))
-	result = ', '.join(str(randint(1, limit)) for r in range(rolls))
-	result = int(result)
-	result += mod
-	return result
+	return mod + int(', '.join(str(randint(1, limit)) for r in range(rolls)))
 
 async def hastebin(content, session=None): # Move to cogs/utils/check in future
 	session = aiohttp.ClientSession()
@@ -95,172 +92,75 @@ class Dnd(commands.Cog): # Work on Embed Rolls also modifier addon
 								color=discord.Color.teal())
 		roll_em.set_thumbnail(url=ctx.message.author.avatar_url)
 
-		if limit == 4:
-			roll_em.set_image(url="https://media.giphy.com/media/fiqcUhBNj6jWgJnRlu/giphy.gif")
-			roll_em.add_field(name=f"Currently rolling {rolls}d{limit}", value="\u200b")
-			msg = await ctx.send(embed=roll_em)
-			await sleep(2)
-			result_em = return_results(limit, rolls, mod)
-			result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-			if rolls > 1:
-				await msg.delete()
-				for i in range(0, rolls):
-					result_em = return_results(limit, rolls, mod, i)
-					result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-					await ctx.send(embed=result_em)
-			else:
-				await msg.edit(embed=result_em)
+		limits = {4 : "https://media.giphy.com/media/fiqcUhBNj6jWgJnRlu/giphy.gif",
+			  6 : "https://bestanimations.com/Games/Dice/rolling-dice-gif-1.gif",
+			  8 : "https://66.media.tumblr.com/457d10f08e468d1392ab7165ab330ba7/dc90dde4ae909e0f-2b/s400x600/a62e416692fcddf76e7623d560b89a8ad102a5c6.gifv",
+			  10 : "https://66.media.tumblr.com/3096dd055c2c00055e68e46695d18b09/23077a30d50cc0d0-93/s400x600/0936ec389211b11f159f79265b15a44370e8688a.gifv",
+			  12 : "https://webstockreview.net/images/dice-clipart-d12-5.png",
+			  20 : "https://66.media.tumblr.com/1458225a6051e572f34b931011630d71/tumblr_ol1es3Lg4a1tevcm3o1_400.gifv",
+			  100 : "https://i.pinimg.com/originals/2f/d5/73/2fd573b2f3c6499ec3963b77475b43b2.png"
+			 }
 
-		elif limit == 6:
-			roll_em.set_image(url="https://bestanimations.com/Games/Dice/rolling-dice-gif-1.gif")
-			roll_em.add_field(name=f"Currently rolling {rolls}d{limit}", value="\u200b")
-			msg = await ctx.send(embed=roll_em)
-			await sleep(2)
-			result_em = return_results(limit, rolls, mod)
-			result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-			if rolls > 1:
-				await msg.delete()
-				for i in range(0, rolls):
-					result_em = return_results(limit, rolls, mod, i)
-					result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-					await ctx.send(embed=result_em)
-			else:
-				await msg.edit(embed=result_em)
-
-		elif limit == 8:
-			roll_em.set_image(url="https://66.media.tumblr.com/457d10f08e468d1392ab7165ab330ba7/dc90dde4ae909e0f-2b/s400x600/a62e416692fcddf76e7623d560b89a8ad102a5c6.gifv")
-			roll_em.add_field(name=f"Currently rolling {rolls}d{limit}", value="\u200b")
-			msg = await ctx.send(embed=roll_em)			
-			await sleep(2)
-			result_em = return_results(limit, rolls, mod)
-			result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-			if rolls > 1:
-				await msg.delete()
-				for i in range(0, rolls):
-					result_em = return_results(limit, rolls, mod, i)
-					result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-					await ctx.send(embed=result_em)
-			else:
-				await msg.edit(embed=result_em)
-
-		elif limit == 10:
-			roll_em.set_image(url="https://66.media.tumblr.com/3096dd055c2c00055e68e46695d18b09/23077a30d50cc0d0-93/s400x600/0936ec389211b11f159f79265b15a44370e8688a.gifv")
-			roll_em.add_field(name=f"Currently rolling {rolls}d{limit}", value="\u200b")
-			msg = await ctx.send(embed=roll_em)
-			await sleep(2)
-			result_em = return_results(limit, rolls, mod)
-			result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-			if rolls > 1:
-				await msg.delete()
-				for i in range(0, rolls):
-					result_em = return_results(limit, rolls, mod, i)
-					result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-					await ctx.send(embed=result_em)
-			else:
-				await msg.edit(embed=result_em)
-
-		elif limit == 100:
-			roll_em.set_image(url="https://i.pinimg.com/originals/2f/d5/73/2fd573b2f3c6499ec3963b77475b43b2.png")
-			roll_em.add_field(name=f"Currently rolling {rolls}d{limit}", value="\u200b")
-			msg = await ctx.send(embed=roll_em)
-			await sleep(2)
-			result_em = return_results(limit, rolls, mod)
-			result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-			if rolls > 1:
-				await msg.delete()
-				for i in range(0, rolls):
-					result_em = return_results(limit, rolls, mod, i)
-					result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-					await ctx.send(embed=result_em)
-			else:
-				await msg.edit(embed=result_em)
-
-		elif limit == 12:
-			roll_em.set_image(url="https://webstockreview.net/images/dice-clipart-d12-5.png")
-			roll_em.add_field(name=f"Currently rolling {rolls}d{limit}", value="\u200b")
-			msg = await ctx.send(embed=roll_em)
-			await sleep(2)
-			result_em = return_results(limit, rolls, mod)
-			result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-			if rolls > 1:
-				await msg.delete()
-				for i in range(0, rolls):
-					result_em = return_results(limit, rolls, mod, i)
-					result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-					await ctx.send(embed=result_em)
-			else:
-				await msg.edit(embed=result_em)
-
-		elif limit == 20:
-			roll_em.set_image(url="https://66.media.tumblr.com/1458225a6051e572f34b931011630d71/tumblr_ol1es3Lg4a1tevcm3o1_400.gifv")
-			roll_em.add_field(name=f"Currently rolling {rolls}d{limit}", value="\u200b")
-			msg = await ctx.send(embed=roll_em)
-			await sleep(2)
-			result_em = return_results(limit, rolls, mod)
-			result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-			if rolls > 1:
-				await msg.delete()
-				for i in range(0, rolls):
-					result_em = return_results(limit, rolls, mod, i)
-					result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-					await ctx.send(embed=result_em)
-			else:
-				await msg.edit(embed=result_em)
-
+		try:
+			  url = limits[limit]
+		except KeyError:
+			url="https://cdn.shopify.com/s/files/1/1483/3510/products/Haunted_Dice_Ice_grande.gif")
+		
+		roll_em.set_image(url="https://cdn.shopify.com/s/files/1/1483/3510/products/Haunted_Dice_Ice_grande.gif")
+		roll_em.add_field(name=f"Currently rolling {rolls}d{limit}", value="\u200b")
+		msg = await ctx.send(embed=roll_em)
+		await sleep(2)
+		result_em = return_results(limit, rolls, mod)
+		result_em.set_thumbnail(url=ctx.message.author.avatar_url)
+		if rolls > 1:
+			await msg.delete()
+			for i in range(0, rolls):
+				result_em = return_results(limit, rolls, mod, i)
+				result_em.set_thumbnail(url=ctx.message.author.avatar_url)
+				await ctx.send(embed=result_em)
 		else:
-			roll_em.set_image(url="https://cdn.shopify.com/s/files/1/1483/3510/products/Haunted_Dice_Ice_grande.gif")
-			roll_em.add_field(name=f"Currently rolling {rolls}d{limit}", value="\u200b")
-			msg = await ctx.send(embed=roll_em)
-			await sleep(2)
-			result_em = return_results(limit, rolls, mod)
-			result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-			if rolls > 1:
-				await msg.delete()
-				for i in range(0, rolls):
-					result_em = return_results(limit, rolls, mod, i)
-					result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-					await ctx.send(embed=result_em)
-			else:
-				await msg.edit(embed=result_em)
+			await msg.edit(embed=result_em)
+			  
 
 	@commands.command(description='Rolling initiative',
 					  usage='This will decide who gets to attack first')
 	async def initiative(self, ctx):
+		def intCheck(i):
+			return type(i.content) == int
+		
 		await ctx.send("How many players are playing?")
-		while True:
-			try:
-				player = await self.azami.wait_for('message')
-				playercont = int(player.content)
-				await player.delete()
-				break
-			except Exception:
-				await ctx.send("Please enter a integer")
+		try:
+			player = await self.azami.wait_for('message', check=intCheck, timeout=120)
+			playercont = int(player.content)
+		except:
+			await ctx.send("Timed out.")
+			return
+		
 		order = []
-		for i in range(0, playercont):
+		for i in range(playercont):
 			msg = await ctx.send(f'Player {i + 1}')
-			msg2 = await ctx.send("Enter your name!")
-			player_name = await self.azami.wait_for('message')
+			
+			msg2 = await ctx.send('Enter your name')
+			try:
+				player_name = await self.azami.wait_for('message',timeout=120)
+			except:
+				await ctx.send("Timed Out.")
 			player_namecont = player_name.content
+			await msg2.delete()
+			
 			msg3 = await ctx.send("Enter your dex modifier")
-			while True:
-				while True:
-					try:
-						mod = await self.azami.wait_for('message')
-						modcont = int(mod.content)
-						break
-					except Exception:
-						await ctx.send("Please enter an integer")
-				result = hiddenrolls(modcont)
-				line = f"{player_namecont},"+str(result)
-				name, score = line.split(',')
-				score = int(score)
-				order.append((name, score))
-				await mod.delete()
-				await msg.delete()
-				await msg2.delete()
-				await msg3.delete()
-				order.sort(key=lambda x: x[1], reverse=True)
-				break
+			try:
+				mod = await self.azami.wait_for('message', check=intCheck, timeout=120)
+				modcont = int(mod.content)
+			except:
+				await ctx.send("Timed out.")
+				return
+				
+			result = hiddenrolls(modcont)
+			order.append((player_namecont, result))
+			await msg.delete()
+			await msg3.delete()
+			order.sort(key=lambda x: x[1], reverse=True)
 					
 		hastebin_list = []
 		for name, score in order:
@@ -288,13 +188,13 @@ class Dnd(commands.Cog): # Work on Embed Rolls also modifier addon
 		y = json.loads(x)
 
 		valueDesc = y['desc']
-		valueDesc = '\n\n'.join(p for p in valueDesc)
+		valueDesc = '\n\n'.join(valueDesc)
 		valueHighLvl = y['higher_level']
-		valueHighLvl = '\n\n'.join(p for p in valueHighLvl)
+		valueHighLvl = '\n\n'.join(valueHighLvl)
 		valueComp = y['components']
-		valueComp = ', '.join(p for p in valueComp)
+		valueComp = ', '.join(valueComp)
 		valueClasses = [y['classes'][x]['name'] for x in range(len(y['classes']))]
-		valueClasses = ', '.join(p for p in valueClasses)
+		valueClasses = ', '.join(valueClasses)
 
 		spell_em = discord.Embed(title="So here's the spell your looking for traveller!",
 								description=f"Information on: {y['name']}",
@@ -444,99 +344,6 @@ class Dnd(commands.Cog): # Work on Embed Rolls also modifier addon
 		class_em.add_field(name="Ability Score per Level", value=valueLevel2)
 		class_em.add_field(name="Proficiencies per Level", value=valueLevel3)
 		await ctx.send(embed=class_em)
-
-	@commands.command(name='dnd menu', description=f'A DND Menu',
-					  aliases=['dndm', 'mdnd'],
-					  usage='dndmenu is written together when using the command')
-	async def dndmenu(self, ctx):
-		menu_em = discord.Embed(title="Welcome to the DND Menu, traveller!",
-								description="So what would you like adventurer?",
-								color=discord.Color.red())
-		menu_em.set_thumbnail(url=ctx.message.author.avatar_url)
-		menu_em.set_footer(text=f"Requested by {ctx.message.author.name} - Today at: " + (
-							  time.strftime("%I:%M %p")),
-							  icon_url=self.azami.user.avatar_url)
-
-		menumessage = "So choose from the following: \n" \
-		"1) a!roll - Simple Roll Command\n" \
-		"2) a!modroll - Simple Roll with modifier\n" \
-		"3) a!initiative - Rolling for initiative\n" \
-		"4) a!spellsearch - Search for any spell in DND 5e\n" \
-		"5) a!classessearch - Search for any class in DND 5e\n" \
-		"6) a!simpleclassessearch - A cleaner way to search for classes in 5e\n" \
-		"7) Quit - Exit Menu"
-
-		menu_em.add_field(name="Menu Commands", value=menumessage)
-
-		msg = await ctx.send(embed=menu_em)
-
-
-		while True:
-			await ctx.send(f"Waiting for you command, {ctx.message.author.name}", delete_after=3)
-			msg2 = await ctx.send("Please enter a number 1 - 7")
-			player = await self.azami.wait_for('message', timeout=120.00)
-			if player.content == "7":
-				await msg.delete()
-				await msg2.delete()
-				await ctx.send("See you next time!")
-				return
-			elif player.content == "1":
-				await msg.delete()
-				await msg2.delete()
-				await ctx.send("Please enter NdN format, eg. 1d20")
-				dice = await self.azami.wait_for('message')
-				await self.roll(ctx, dice.content)
-				break
-			elif player.content == "2":
-				await msg.delete()
-				await msg2.delete()
-				await ctx.send("Please enter NdNdN format, eg. 1d20d2")
-				dice = await self.azami.wait_for('message')
-				dice = dice.content
-				try:
-					rolls, limit, mod = map(int, dice.split('d'))
-				except Exception:
-					await ctx.send('The format has to be in NdNdN!')
-					return
-				dice = str(rolls) + "d" + str(limit)
-				await self.roll(ctx, dice, mod)
-				break
-			elif player.content == "3":
-				await msg.delete()
-				await msg2.delete()
-				await self.initiative(ctx)
-				break
-			elif player.content == "4":
-				await msg.delete()
-				await msg2.delete()
-				await ctx.send("Enter the spell you want to search for: ")
-				player = await self.azami.wait_for('message')
-				playercont = player.content
-				await player.delete()
-				spell_em = spellfind(self.driver, playercont, ctx, self.azami)
-				await ctx.send(embed=spell_em)
-				break
-			elif player.content == "5":
-				await msg.delete()
-				await msg2.delete()
-				await ctx.send("Enter the class you want to search for: ")
-				player = await self.azami.wait_for('message')
-				playercont = player.content
-				await player.delete()
-				class_em = classfind(self.driver, playercont, ctx, self.azami)
-				await ctx.send(embed=class_em)
-				break
-			elif player.content == "6":
-				await msg.delete()
-				await msg2.delete()
-				await ctx.send("Enter the class you want to search for: ")
-				player = await self.azami.wait_for('message')
-				playercont = player.content
-				await player.delete()
-				spell_em = await simpleclassfind(self.driver, playercont, ctx, self.azami)
-				await ctx.send(embed=spell_em)
-				break
-
 
 
 def setup(azami):
