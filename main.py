@@ -23,6 +23,7 @@ maths.py
 mod.py
 owner.py
 server.py
+CommandErrorHandler.py
 
 Thanks for reading this extra info. Have fun programmers!
 '''
