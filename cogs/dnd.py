@@ -12,12 +12,6 @@ from driver import get_driver
 
 # This cog is a real mess but it works xD
 
-color_list = [discord.Color.red(), discord.Color.green(), discord.Color.blue(),
-			  discord.Color.orange(), discord.Color.purple(), discord.Color.gold(),
-			  discord.Color.blurple(), discord.Color.greyple(), discord.Color.teal(),
-			  discord.Color.dark_red(), discord.Color.dark_green(),
-			  discord.Color.light_grey(), discord.Color.dark_gold()]
-
 async def return_results(limit, rolls, mod, msg, url): # Future update: Embed all commands
 	total = 0
 	results = [randint(1, limit) for roll in range(rolls)]
@@ -26,6 +20,7 @@ async def return_results(limit, rolls, mod, msg, url): # Future update: Embed al
 		embed = discord.Embed(title=f'Roll: {result + 1}/{rolls}',
 								color=discord.Color.gold())
 		embed.add_field(name='Result', value=results[result])
+		embed.add_field(name='Rolls', value=', '.join(results[:result+1]))
 		embed.add_field(name='Total', value=f'Your total is: {total} + {mod}')
 		embed.set_image(url=diceroll(limit))
 		embed.set_thumbnail(url=url)
@@ -66,7 +61,9 @@ class Dnd(commands.Cog): # Work on Embed Rolls also modifier addon
 		except Exception:
 			await ctx.send('The format has to be in NdN!')
 			return
-
+		if rolls > 10:
+			await ctx.send('That is too many dice, the maximum is 10!')
+			return
 		roll_em = discord.Embed(title=f"Rolling {rolls} dice(s)",
 								description=f"Hope you get a natural {limit}!",
 								color=discord.Color.teal())
