@@ -18,7 +18,7 @@ color_list = [discord.Color.red(), discord.Color.green(), discord.Color.blue(),
 			  discord.Color.dark_red(), discord.Color.dark_green(),
 			  discord.Color.light_grey(), discord.Color.dark_gold()]
 
-async def return_results(limit, rolls, mod, msg): # Future update: Embed all commands
+async def return_results(limit, rolls, mod, msg, url): # Future update: Embed all commands
 	total = 0
 	results = [randint(1, limit) for roll in range(rolls)]
 	for result in range(len(results)):
@@ -28,6 +28,7 @@ async def return_results(limit, rolls, mod, msg): # Future update: Embed all com
 		embed.add_field(name='Result', value=results[result])
 		embed.add_field(name='Total', value=f'Your total is: {total} + {mod}')
 		embed.set_image(url=diceroll(limit))
+		embed.set_thumbnail(url=url)
 		await msg.edit(embed=embed)
 		await asyncio.sleep(2)
 		
