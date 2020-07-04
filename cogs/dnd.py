@@ -12,46 +12,21 @@ from driver import get_driver
 
 # This cog is a real mess but it works xD
 
-color_list = [discord.Color.red(), discord.Color.green(), discord.Color.blue(),
-			  discord.Color.orange(), discord.Color.purple(), discord.Color.gold(),
-			  discord.Color.blurple(), discord.Color.greyple(), discord.Color.teal(),
-			  discord.Color.dark_red(), discord.Color.dark_green(),
-			  discord.Color.light_grey(), discord.Color.dark_gold()]
-
-def return_results(limit, rolls, mod, i=0): # Future update: Embed all commands
-	if rolls == 1:
-		result = ', '.join(str(randint(1, limit)) for r in range(rolls))
-		result = int(result)
-
-		if mod > 0:
-			result += mod
-
-		result_em = discord.Embed(title=f"Here's your result!",
-							  	  description=f"You got: {result}!",
-							  	  color=discord.Color.gold())
-
-		if result > 20:
-			return result_em
-		else:
-			dicepic = diceroll(result)
-			result_em.set_image(url=dicepic)
-			return result_em
-
-	else:
-		multi_em = discord.Embed(title=f"Rolled so far {i+1}",
-								 color=discord.Color.gold())
-		limit = randint(1, limit)
-
-		if mod > 0:
-			limit += mod
-
-		if limit > 20:
-			return multi_em.add_field(name=f"Roll {i + 1}", value=f"This your value: {limit}")
-		else:
-			dicepic = diceroll(limit)
-			multi_em.add_field(name=f"Roll {i + 1}", value=f"This your value: {limit}")
-			multi_em.set_image(url=dicepic)
-			return multi_em
+async def return_results(limit, rolls, mod, msg, url): # Future update: Embed all commands
+	total = 0
+	results = [randint(1, limit) for roll in range(rolls)]
+	for result in range(len(results)):
+		total += results[result]
+		embed = discord.Embed(title=f'Roll: {result + 1}/{rolls}',
+								color=discord.Color.gold())
+		embed.add_field(name='Result', value=results[result])
+		embed.add_field(name='Rolls', value=', '.join(results[:result+1]))
+		embed.add_field(name='Total', value=f'Your total is: {total} + {mod}')
+		embed.set_image(url=diceroll(limit))
+		embed.set_thumbnail(url=url)
+		await msg.edit(embed=embed)
+		await asyncio.sleep(2)
+		
 
 def hiddenrolls(mod=0):
 	dice = '1d20'
@@ -86,7 +61,9 @@ class Dnd(commands.Cog): # Work on Embed Rolls also modifier addon
 		except Exception:
 			await ctx.send('The format has to be in NdN!')
 			return
-
+		if rolls > 10:
+			await ctx.send('That is too many dice, the maximum is 10!')
+			return
 		roll_em = discord.Embed(title=f"Rolling {rolls} dice(s)",
 								description=f"Hope you get a natural {limit}!",
 								color=discord.Color.teal())
@@ -106,20 +83,11 @@ class Dnd(commands.Cog): # Work on Embed Rolls also modifier addon
 		except KeyError:
 			url="https://cdn.shopify.com/s/files/1/1483/3510/products/Haunted_Dice_Ice_grande.gif")
 		
-		roll_em.set_image(url="https://cdn.shopify.com/s/files/1/1483/3510/products/Haunted_Dice_Ice_grande.gif")
+		roll_em.set_image(url=url)
 		roll_em.add_field(name=f"Currently rolling {rolls}d{limit}", value="\u200b")
 		msg = await ctx.send(embed=roll_em)
 		await sleep(2)
-		result_em = return_results(limit, rolls, mod)
-		result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-		if rolls > 1:
-			await msg.delete()
-			for i in range(0, rolls):
-				result_em = return_results(limit, rolls, mod, i)
-				result_em.set_thumbnail(url=ctx.message.author.avatar_url)
-				await ctx.send(embed=result_em)
-		else:
-			await msg.edit(embed=result_em)
+		return_results(limit, rolls, mod, msg, ctx.message.author.avatar_url)
 			  
 
 	@commands.command(description='Rolling initiative',
