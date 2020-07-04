@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 [![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-oxygen.svg)](https://forthebadge.com)
@@ -91,6 +92,10 @@ Steps are:
 
 ## The GNU General Public License v3.0
 
+=======
+# AzamiPublic
+The Public Release of AzamiDB
+>>>>>>> parent of 793657e... V1.0 Azami Public Release Commit
 =======
 # AzamiPublic
 The Public Release of AzamiDB
