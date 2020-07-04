@@ -29,13 +29,9 @@ class Server(commands.Cog):
 		server = ctx.message.guild
 		online = 0
 		for i in server.members:
-			if str(i.status) == 'online' or str(i.status) == 'idle' or str(i.status) == 'dnd':
+			if str(i.status) != 'offline':
 				online += 1
-		all_users = []
-		for user in server.members:
-			all_users.append(f'{user.name}')
-		all_users.sort()
-		_all = '\n'.join(all_users)
+		all_users = '\n'.join(sorted([userName.name for userName in server.members]))
 		channel_count = len([x for x in server.channels if type(x) == discord.channel.TextChannel])
 		role_count = len(server.roles)
 		emoji_count = len(server.emojis)
