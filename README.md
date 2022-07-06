@@ -4,6 +4,7 @@ Azami Public Release
 **Azami was developed in python under the rewrite branch. Made by NeonNingen**\
 **This bot is open source! So play with it to your heart contents!**\
 **You can rename this bot or change anything you like! Go to events.py to do so**
+**IMPORTANT: V2 is now open sourced - https://github.com/NeonNingen/AzamiDB**
 
 ##### Use a!help for Azami's commands
 
